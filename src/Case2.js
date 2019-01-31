@@ -1,23 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Button,
   CssBaseline,
   FormControl,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  Input,
-  InputLabel,
   Paper,
+  List,
   Typography,
   withStyles
 } from '@material-ui/core';
+import axios from 'axios';
+import Vlist from './Listen';
 
 const styles = theme => ({
   main: {
@@ -54,47 +46,24 @@ const styles = theme => ({
 class Case2 extends React.Component {
 
   state = { 
-    input: '',
-    status: '',
-    kondisi: false,
-    open: false
+    text: [],
   };
 
-  handleClose = () => {
-    this.setState({
-        open: false,
-    });
-  };
+  componentDidMount(){
+    axios.get('https://jsonplaceholder.typicode.com/todos')
+      .then(res=>{
+        this.setState({text: res.data});
+      })
+      .catch(err=>{
+        console.log(err)
+      })
+  }
 
-  handleSubmit = () => {
-    var arr = this.state.input.split();
-    var endarr = arr.length-1
-
-    for(let i=0; i<=(arr.length/2)-1;i++){
-      if(arr[0]===arr[endarr]){
-        this.setState({kondisi:true,open:true,status:'VALID'})
-        endarr--
-      } else {
-        this.setState({kondisi:false,open:true,status:'NOT VALID'})
-        break
-      }
-    }
-  };
 
   render(){
     const { classes } = this.props;
-    const {open} = this.state;
     return (
       <main className={classes.main}>
-        <Dialog open={open} onClose={this.handleClose}>
-          <DialogTitle>Result validation!</DialogTitle>
-          <DialogContent>
-            <DialogContentText>{this.state.status}</DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button color='primary' onClick={this.handleClose}>Ok</Button>
-          </DialogActions>
-        </Dialog>
         <CssBaseline />
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h5">
@@ -102,20 +71,10 @@ class Case2 extends React.Component {
           </Typography>
           <form className={classes.form}>
             <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="first_name">Input Text Here</InputLabel>
-              <Input autoComplete="first_name" autoFocus
-                onChange={(text)=>this.setState({input:text})}
-              />
+              <List>
+                {this.state.text.map((text,key)=> <Vlist key={key} text={text}/>)}
+              </List>
             </FormControl>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={this.handleSubmit}
-            >
-              Validate
-            </Button>
           </form>
         </Paper>
       </main>
