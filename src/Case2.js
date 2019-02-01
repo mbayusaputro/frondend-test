@@ -5,20 +5,28 @@ import {
   FormControl,
   Paper,
   List,
+  ListItem,
+  ListItemText,
   Typography,
   withStyles
 } from '@material-ui/core';
-import axios from 'axios';
-import Vlist from './Listen';
 
 const styles = theme => ({
+  root: {
+    width: '100%',
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper,
+    display: 'flex',
+    flexDirection: 'row',
+    padding: 10,
+    },
   main: {
     width: 'auto',
     display: 'block', // Fix IE 11 issue.
     marginLeft: theme.spacing.unit * 3,
     marginRight: theme.spacing.unit * 3,
     [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-      width: 400,
+      width: 800,
       marginLeft: 'auto',
       marginRight: 'auto',
     },
@@ -42,24 +50,28 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
   },
 });
-  
+
 class Case2 extends React.Component {
 
-  state = { 
-    themeext: [],
-  };
+  constructor(props) {
+    super(props);
 
-  componentDidMount(){
-    axios.get('https://jsonplaceholder.typicode.com/todos')
-      .then(res=>{
-        this.setState({text: res.data});
-        console.log(this.state.text)
-      })
-      .catch(err=>{
-        console.log(err)
-      })
+    this.state = { 
+      users: [],
+    };
   }
-  render(){
+
+  componentDidMount() {
+    fetch('https://randomuser.me/api/?results=8&nat=us')
+      .then(results => results.json())
+      .then(data => {
+        const users = data.results;
+        this.setState({ users });
+      })
+      .catch(err => console.log(err))
+  }
+
+  render() {
     const { classes } = this.props;
     return (
       <main className={classes.main}>
@@ -68,12 +80,37 @@ class Case2 extends React.Component {
           <Typography component="h1" variant="h5">
             Case 2
           </Typography>
+          <Typography component="p">
+A higher-order component (HOC) is an advanced technique in React for reusing component logic. HOCs are not part of the React API, per se. They are a pattern that emerges from React’s compositional nature.
+
+Concretely, a higher-order component is a function that takes a component and returns a new component. <a target="blank" href="https://reactjs.org/docs/higher-order-components.html">Docs React</a>
+          </Typography>
+          <br></br>
+          <Typography component="h1" variant="h5">
+            This Example
+          </Typography>
+          <br></br>
           <form className={classes.form}>
-            <FormControl margin="normal" required fullWidth>
-              <List>
-                {this.state.text.map((text,key)=> <Vlist key={key} text={text}/>)}
-              </List>
-            </FormControl>
+
+            <Typography component="h1" variant="h5">
+              Connect React Redux
+            </Typography>
+            <Typography component="h1" variant="h5">
+              &
+            </Typography>
+            <List className={classes.root}>
+              {this.state.users.map((user, index) => {
+                return (
+                  <ListItem key={index}>
+                    <ListItemText primary={user.name.first} secondary={user.gender} />
+                  </ListItem>
+                );
+              })}
+            </List>
+            <Typography component="p">
+              <a target="blank" href="https://reactjs.org/docs/higher-order-components.html">More Example in Docs React</a>
+            </Typography>
+
           </form>
         </Paper>
       </main>

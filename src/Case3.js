@@ -64,13 +64,18 @@ class Case3 extends React.Component {
   };
 
   handleSubmit = () => {
-    var arr = this.state.input.split();
+
+    let inputText = document.getElementById("input_text").value
+
+    var arr = inputText.split();
     var endarr = arr.length-1
+    console.log(arr)
 
     for(let i=0; i<=(arr.length/2)-1;i++){
-      if(arr[0]===arr[endarr]){
+      console.log(i)
+      if(arr[i]===arr[endarr]){
+        console.log(arr)
         this.setState({kondisi:true,open:true,status:'VALID'})
-        endarr--
       } else {
         this.setState({kondisi:false,open:true,status:'NOT VALID'})
         break
@@ -99,8 +104,8 @@ class Case3 extends React.Component {
           </Typography>
           <form className={classes.form}>
             <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="first_name">Input Text Here</InputLabel>
-              <Input autoComplete="first_name" autoFocus
+              <InputLabel htmlFor="input_text">Input Text Here</InputLabel>
+              <Input id="input_text" name="input_text" autoComplete="input_text" autoFocus
                 onChange={(text)=>this.setState({input:text})}
               />
             </FormControl>
