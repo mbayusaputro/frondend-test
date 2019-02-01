@@ -63,23 +63,38 @@ class Case3 extends React.Component {
     });
   };
 
+
+checkBrackets(str){
+    // depth of the parenthesis
+    // ex : ( 1 ( 2 ) ( 2 ( 3 ) ) )
+    var depth = 0;
+    // for each char in the string : 2 cases
+    for(var i in str){   
+        if(str[i] == '('){
+            // if the char is an opening parenthesis then we increase the depth
+            depth ++;
+        } else if(str[i] == ')') {
+            // if the char is an closing parenthesis then we decrease the depth
+            depth --;
+        }  
+        //  if the depth is negative we have a closing parenthesis 
+        //  before any matching opening parenthesis
+        if (depth < 0) return false;
+    }
+    // If the depth is not null then a closing parenthesis is missing
+    if(depth > 0) return false;
+    // OK !
+    return true;
+}
+
   handleSubmit = () => {
 
-    let inputText = document.getElementById("input_text").value
+    let inputText = this.checkBrackets(document.getElementById("input_text").value)
 
-    var arr = inputText.split();
-    var endarr = arr.length-1
-    console.log(arr)
-
-    for(let i=0; i<=(arr.length/2)-1;i++){
-      console.log(i)
-      if(arr[i]===arr[endarr]){
-        console.log(arr)
-        this.setState({kondisi:true,open:true,status:'VALID'})
-      } else {
-        this.setState({kondisi:false,open:true,status:'NOT VALID'})
-        break
-      }
+    if(inputText === true){
+      this.setState({open:true,status:'VALID'})
+    } else {
+      this.setState({open:true,status:'NOT VALID'})
     }
   };
 
