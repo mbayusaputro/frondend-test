@@ -55,7 +55,7 @@ class Case1 extends React.Component {
 
   state = { 
     value: 'person',
-    first_name: '',
+    first_name: 'cacaca',
     last_name: '',
     email: '',
     company_name: '',
@@ -78,11 +78,15 @@ class Case1 extends React.Component {
 
   handleSubmit = () => {
     if(this.state.value === 'person'){
-      let validateForm = /[a-zA-Z]+/
-      let validateEmail = /[a-zA-Z0-9.]{1,64}@[a-zA-Z.]{1,64}$/
+      const validateForm = /[a-zA-Z]+/
+      const validateEmail = /[a-zA-Z0-9.]{1,64}@[a-zA-Z.]{1,64}$/
       let resultFirstName = validateForm.test(this.state.first_name)
       let resultLastName = validateForm.test(this.state.last_name)
       let resultEmail = validateEmail.test(this.state.email)
+
+      console.log(resultFirstName)
+      console.log(resultLastName)
+      console.log(resultEmail)
     
       if(resultFirstName === true && resultLastName === true && resultEmail === true){
         this.setState({open:true, status:'VALID!'});
@@ -90,10 +94,12 @@ class Case1 extends React.Component {
         this.setState({open:true, status:'NOT VALID!'});
       }
     } else if(this.state.value === 'company'){
-      let validateCompany = /(.)+/
-      let validatePhone = /^[\d]{3}-[\d]{3}-[\d]{3}$/
+      const validateCompany = /(.)+/
+      const validatePhone = /^[0-9]{3}-[0-9]{3}-[0-9]{3}$/
       let resultCompany = validateCompany.test(this.state.company_name)
       let resultPhone = validatePhone.test(this.state.phone)
+
+      console.log(resultCompany)
       console.log(resultPhone)
 
       if(resultCompany === true && resultPhone === true){

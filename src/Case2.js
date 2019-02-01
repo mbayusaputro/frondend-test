@@ -46,20 +46,19 @@ const styles = theme => ({
 class Case2 extends React.Component {
 
   state = { 
-    text: [],
+    themeext: [],
   };
 
   componentDidMount(){
     axios.get('https://jsonplaceholder.typicode.com/todos')
       .then(res=>{
         this.setState({text: res.data});
+        console.log(this.state.text)
       })
       .catch(err=>{
         console.log(err)
       })
   }
-
-
   render(){
     const { classes } = this.props;
     return (
@@ -67,7 +66,7 @@ class Case2 extends React.Component {
         <CssBaseline />
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h5">
-            Case 3
+            Case 2
           </Typography>
           <form className={classes.form}>
             <FormControl margin="normal" required fullWidth>
