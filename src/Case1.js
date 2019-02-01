@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Dialog,
-  DialogActions,
+  DialogActions,patternpattern,
   DialogContent,
   DialogContentText,
   DialogTitle,
@@ -78,11 +78,16 @@ class Case1 extends React.Component {
 
   handleSubmit = () => {
     if(this.state.value === 'person'){
-      const validateForm = /[a-zA-Z]+/
-      const validateEmail = /[a-zA-Z0-9.]{1,64}@[a-zA-Z.]{1,64}$/
-      let resultFirstName = validateForm.test(this.state.first_name)
-      let resultLastName = validateForm.test(this.state.last_name)
-      let resultEmail = validateEmail.test(this.state.email)
+      const patternForm = /[a-zA-Z]+/
+      const patternEmail = /[a-zA-Z0-9.]{1,64}@[a-zA-Z.]{1,64}$/
+
+      let inputFirstName = document.getElementById("first_name").value.match(patternForm)
+      let inputLastName = document.getElementById("last_name").value.match(patternForm)
+      let inputEmail = document.getElementById("email").value.match(patternEmail)
+
+      let resultFirstName = patternForm.test(inputFirstName)
+      let resultLastName = patternForm.test(inputLastName)
+      let resultEmail = patternEmail.test(inputEmail)
 
       console.log(resultFirstName)
       console.log(resultLastName)
@@ -94,10 +99,14 @@ class Case1 extends React.Component {
         this.setState({open:true, status:'NOT VALID!'});
       }
     } else if(this.state.value === 'company'){
-      const validateCompany = /(.)+/
-      const validatePhone = /^[0-9]{3}-[0-9]{3}-[0-9]{3}$/
-      let resultCompany = validateCompany.test(this.state.company_name)
-      let resultPhone = validatePhone.test(this.state.phone)
+      const patternCompany = /(.)+/
+      const patternPhone = /^[0-9]{3}-[0-9]{3}-[0-9]{3}$/
+
+      let inputCompany = document.getElementById("company_name").value.match(patternCompany)
+      let inputPhone = document.getElementById("phone").value.match(patternPhone)
+
+      let resultCompany = patternCompany.test(inputCompany)
+      let resultPhone = patternPhone.test(inputPhone)
 
       console.log(resultCompany)
       console.log(resultPhone)
@@ -132,7 +141,7 @@ class Case1 extends React.Component {
           <form className={classes.form}>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="first_name">First Name</InputLabel>
-              <Input autoComplete="first_name" autoFocus
+              <Input id="first_name" name="first_name" autoComplete="first_name" autoFocus
                 onChange={(text)=>this.setState({first_name:text})}
                 />
             </FormControl>
